@@ -24,7 +24,7 @@ export default function Expense() {
         value: 0,
         transaction_date: '',
         type: '',
-        user_id: localStorage.getItem('user_id') || ''
+        user_id: ''
     });
     const [isEditing, setIsEditing] = useState<boolean>(false);
 
@@ -80,7 +80,7 @@ export default function Expense() {
                 value: 0,
                 transaction_date: '',
                 type: '',
-                user_id: localStorage.getItem('user_id') || ''
+                user_id: ''
             });
         } catch (error: any) {
             toast.error('Houve algum erro, por favor tente novamente mais tarde');

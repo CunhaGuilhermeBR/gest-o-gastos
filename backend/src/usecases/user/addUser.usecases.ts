@@ -2,7 +2,7 @@ import { ExceptionsService } from '../../infrastructure/exceptions/exceptions.se
 import { ILogger } from '../../domain/logger/logger.interface';
 import { UserM } from '../../domain/model/user';
 import { UserRepository } from '../../domain/repositories/user.inteface.repository';
-import * as bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 export class AddUserUseCases {
   constructor(private readonly logger: ILogger, private readonly userRepository: UserRepository, private readonly exceptionsService: ExceptionsService) { }

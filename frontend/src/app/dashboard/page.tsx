@@ -36,7 +36,7 @@ export default function Dashboard() {
       try {
         const user_id = localStorage.getItem('user_id');
         if (!user_id) {
-          router.push('/')
+          return router.push('/')
         };
         const params = {
           user_id

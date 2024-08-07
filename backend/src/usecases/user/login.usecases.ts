@@ -1,7 +1,6 @@
 import { UserMWithoutPassword } from 'src/domain/model/user';
-import { ILogger } from '../../domain/logger/logger.interface';
 import { UserRepository } from '../../domain/repositories/user.inteface.repository';
-import * as bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 export class LoginUseCases {
     constructor(private readonly userRepository: UserRepository) { }
