@@ -1,6 +1,6 @@
 import { UserMWithoutPassword } from 'src/domain/model/user';
 import { UserRepository } from '../../domain/repositories/user.inteface.repository';
-import bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcrypt';
 
 export class LoginUseCases {
     constructor(private readonly userRepository: UserRepository) { }
