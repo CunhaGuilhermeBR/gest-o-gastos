@@ -1,60 +1,73 @@
-# Gestão de gastos
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+</p>
 
-Desenvolvedores:
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-**Guilherme Cunha, guilhermegomescunha@hotmail.com**
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-_**Resumo**. Essa aplicação é um teste interno da empresa Kukac. Consiste num frontend e backend para fazer um controle de gastos financeiros. Para entregar a solução foram utilizados a seguintes tecnlogias:
+## Description
 
-# Tecnologias
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Backend
+## Installation
 
-+ [NestJS](https://nestjs.com/)
-+ [TypeORM](https://typeorm.io/)
-+ [MongoDB](https://www.mongodb.com/)
-+ [MongoDB Atlas](https://www.mongodb.com/products/platform/atlas-database)
+```bash
+$ yarn install
+```
 
-## Porque das escolhas
+## Running the app
 
-O Nest foi escolhido porque é uma maneira rápida e fácil de gerar uma aplicação que atendesse os requisitos(O crud). Dentro do Nest eu fiz algumas implementações personalizadas como o Logger e o serviço de Excessões. Essa escolha foi tendo em vista se eu precisar alterar algo eu tenho o domínio, caso minhas regras de negócio venham a pedir, mas como o projeto foi bem simples, tanto o Logger quanto as Excessões, ficaram apenas uma abstração simples de soluções já prontas. 
+```bash
+# development
+$ yarn run start
 
+# watch mode
+$ yarn run start:dev
 
-<ul>Dividi o projeto em 3 grandes pastas, sendo elas:
-	<li>domain;</li>
-	<li>infrastructure;</li>
-	<li>usecases</li>
-</ul>
+# production mode
+$ yarn run start:prod
+```
 
-Essa divisão eu achei adequada pra o projeto por separar bem as responsabilidades e mescla o que acabei vendo em alguns projetos nos últimos anos aqui na empresa. O domain deixando as interfaces e modelos para serem usados, infrastructure fazendo as configurações/conexões do projeto e o use cases eu deixei para agrupar todo o fluxo dos endpoints, ele que configura, formata, manda/pega dados pro banco(repositório) e gerencia tudo isso. Com essa divisão é necessária um use case para cada rota.
+## Test
 
-O TypeORM, sinceramente, eu escolhi porque nunca tinha mexido com ele, então acabou sendo um 'desafio' e um aprendizado. Achei que ele integra bem com o Nest e foi de fácil manuseio, o que foi um pouco mais chato foi a parte de configuração do Mongo.
+```bash
+# unit tests
+$ yarn run test
 
-O MongoDB eu escolhi por ser um banco NoSQL de fácil manuseio e que tem a disponibildade do Atlas, um banco na cloud gratuito, o que me economizou tempo numa instância manual de banco e um banco que pode ser usado ao fim da entrega dessa tarefa. 
+# e2e tests
+$ yarn run test:e2e
 
-## Frontend
+# test coverage
+$ yarn run test:cov
+```
 
-+ [NextJS](https://nextjs.org/)
-+ [Tailwind](https://tailwindcss.com/)
+## Support
 
-Escolhi o Next porque tinha lido e escutado algumas coisas boas sobre ele, porém foi minha primeira integração usando o mesmo. Eu senti que o Next é bem poderoso e pode gerar muitos benefícios para o usuário final e pro time de desenvolvimento, apenas achei que não seria o ideal para projetos pequenos, mas num geral foi uma experiência tranquila.
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-O Tailwind eu escolhi por ser a forma mais fácil e rápida das opções fornecidas, também foi minha primeira vez utilizando e achei MUITO fácil e intuitivo de se usar. Eu utilizei um site pra ficar personalizando o projeto, senti que foi mais fácil do que se jogasse no projeto e fosse ficar modificando depois. A plataforma é essa: 
-+ [TailwindPlayground](https://play.tailwindcss.com/)
+## Stay in touch
 
-## Aprendizados e considerações
+- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-Acho que, num geral, o projeto ficou bom. É um escopo bem simples, mas que tem muita coisa para o desenvolvedor poder trabalhar e pensar. Fiquei bastante satisfeito com a entrega da parte do Backend, como citado acima preferi fazer algumas implementações na mão do que trazer dependências ao projeto, um outro exemplo é o middleware router.logger ao invés de utilizar o Morgan que normalmente uso. Com esse padrão de abstração eu consigo fazer que as partes do meu projeto funcionem como eu queira e evita várias depedências externas.
+## License
 
-## Roadmap de melhorias
-
-Para futuras melhorias eu olharia para o front, ver se tem algo a ser otimizado/corrigido, principalmente na organização estrutural e configuração/uso do tailwind. No backend eu faria um sistema de cache, caso tivesse um grande número de usuários, iria optar igual usamos no AWSA Phoenix(Redis e Cache aside).
-
-## Considerações finais
-
-Como visto no frontend, a UI segui um estilo/padronização do jogo Persona. Para fazer essa personalização utilizei os seguintes links:
-+ [Paleta de Cores](https://www.color-hex.com/color-palette/1019867)
-+ [*CSS do botão](https://codepen.io/kevinquach/pen/JNGmKG?editors=1111)
-+ [Gerador de imagem](https://www.fontbolt.com/font/persona-5-font/)
-
-*PS: Não fiz nenhuma alteração no CSS do botão, apenas coloquei o HTML e componentizei para reutilizar o botão com maior facilidade, fazendo somente as mudanças necessárias para essa componentização funcionar 
+Nest is [MIT licensed](LICENSE).
