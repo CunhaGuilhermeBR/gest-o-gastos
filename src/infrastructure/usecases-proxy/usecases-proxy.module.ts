@@ -26,6 +26,7 @@ import { DeleteCategoryUseCases } from '../../usecases/category/delete.usecases'
 import { DatabaseCategoryRepository } from '../repositories/category.repository';
 import { GetProductUseCases } from 'src/usecases/product/getProduct.usecases';
 import { GetCategoryUseCases } from 'src/usecases/category/getCategory.usecases';
+import { GetAllCategoriesUseCases } from 'src/usecases/category/getAll.usecases';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule],
@@ -40,6 +41,7 @@ export class UsecasesProxyModule {
 
   // Category Usecase Proxies
   static GET_CATEGORY_USECASES_PROXY = 'GetCategoryUsecasesProxy';
+  static GET_ALL_CATEGORY_USECASES_PROXY = 'GetAllCategoriesusecasesProxy'
   static GET_CATEGORIES_USECASES_PROXY = 'GetCategoriesUsecasesProxy';
   static POST_CATEGORY_USECASES_PROXY = 'PostCategoryUsecasesProxy';
   static PUT_CATEGORY_USECASES_PROXY = 'PutCategoryUsecasesProxy';
@@ -135,6 +137,12 @@ export class UsecasesProxyModule {
         },
         {
           inject: [DatabaseCategoryRepository],
+          provide: UsecasesProxyModule.GET_ALL_CATEGORY_USECASES_PROXY,
+          useFactory: (categoryRepository: DatabaseCategoryRepository) =>
+            new UseCaseProxy(new GetAllCategoriesUseCases(categoryRepository)),
+        },
+        {
+          inject: [DatabaseCategoryRepository],
           provide: UsecasesProxyModule.GET_CATEGORIES_USECASES_PROXY,
           useFactory: (categoryRepository: DatabaseCategoryRepository) =>
             new UseCaseProxy(new GetCategoriesUseCases(categoryRepository)),
@@ -175,6 +183,7 @@ export class UsecasesProxyModule {
         UsecasesProxyModule.POST_CATEGORY_USECASES_PROXY,
         UsecasesProxyModule.PUT_CATEGORY_USECASES_PROXY,
         UsecasesProxyModule.DELETE_CATEGORY_USECASES_PROXY,
+        UsecasesProxyModule.GET_ALL_CATEGORY_USECASES_PROXY
       ],
     };
   }

@@ -13,6 +13,7 @@ import { AddCategoryUseCases } from '../../../usecases/category/addCategory.usec
 import { CategoryM } from '../../../domain/model/category';
 import { ObjectId } from 'typeorm';
 import { ExceptionsService } from '../../exceptions/exceptions.service';
+import { GetAllCategoriesUseCases } from 'src/usecases/category/getAll.usecases';
 
 @Controller('category')
 @ApiTags('category')
@@ -31,6 +32,8 @@ export class CategoryController {
     private readonly deleteCategoryUsecaseProxy: UseCaseProxy<DeleteCategoryUseCases>,
     @Inject(UsecasesProxyModule.POST_CATEGORY_USECASES_PROXY)
     private readonly addCategoryUsecaseProxy: UseCaseProxy<AddCategoryUseCases>,
+    @Inject(UsecasesProxyModule.GET_ALL_CATEGORY_USECASES_PROXY)
+    private readonly getAllCategoriesUsecaseProxy: UseCaseProxy<GetAllCategoriesUseCases>,
   ) { }
 
   @Get('category')
@@ -48,6 +51,12 @@ export class CategoryController {
   async getCategories() {
     const categories = await this.getAllCategoryUsecaseProxy.getInstance().execute();
     return categories;
+  }
+
+  @Get('all')
+  @ApiResponseType(CategoryPresenter, true)
+  async getAllCategories() {
+    return await this.getAllCategoriesUsecaseProxy.getInstance().execute();
   }
 
   @Put('category')
