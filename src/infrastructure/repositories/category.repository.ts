@@ -44,8 +44,6 @@ export class DatabaseCategoryRepository implements CategoryRepository {
 
     async findProductByCategory() {
         const categories = await this.categoryEntityRepository.find();
-        console.log(categories)
-
         const groupedProducts: Record<string, Product[]> = {};
 
         for (const category of categories) {
@@ -57,10 +55,7 @@ export class DatabaseCategoryRepository implements CategoryRepository {
             });
 
             if (products.length > 0) {
-                console.log('TEM MAIS DE UM ITEM')
                 groupedProducts[category.name] = products;
-            } else{
-                console.log('NÃO ENCONTREI NADA DESSA CATEGORIA')
             }
         }
 
