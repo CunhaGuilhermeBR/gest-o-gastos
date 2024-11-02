@@ -11,13 +11,15 @@ const common_1 = require("@nestjs/common");
 const usecases_proxy_module_1 = require("../usecases-proxy/usecases-proxy.module");
 const user_controller_1 = require("./user/user.controller");
 const exceptions_module_1 = require("../exceptions/exceptions.module");
+const product_controller_1 = require("./product/product.controller");
+const category_controller_1 = require("./category/category.controller");
 let ControllersModule = class ControllersModule {
 };
 exports.ControllersModule = ControllersModule;
 exports.ControllersModule = ControllersModule = __decorate([
     (0, common_1.Module)({
         imports: [usecases_proxy_module_1.UsecasesProxyModule.register(), exceptions_module_1.ExceptionsModule],
-        controllers: [user_controller_1.UserController],
+        controllers: [user_controller_1.UserController, product_controller_1.ProductController, category_controller_1.CategoryController],
     })
 ], ControllersModule);
 //# sourceMappingURL=controller.module.js.map

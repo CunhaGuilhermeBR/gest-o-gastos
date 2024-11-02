@@ -13,14 +13,18 @@ const typeorm_module_1 = require("../config/typeorm/typeorm.module");
 const user_entity_1 = require("../entities/user.entity");
 const user_repository_1 = require("./user.repository");
 const mongodb_module_1 = require("../config/mongodb/mongodb.module");
+const product_entity_1 = require("../entities/product.entity");
+const category_entity_1 = require("../entities/category.entity");
+const product_repository_1 = require("./product.repository");
+const category_repository_1 = require("./category.repository");
 let RepositoriesModule = class RepositoriesModule {
 };
 exports.RepositoriesModule = RepositoriesModule;
 exports.RepositoriesModule = RepositoriesModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_module_1.TypeOrmConfigModule, mongodb_module_1.DatabaseModule, typeorm_1.TypeOrmModule.forFeature([user_entity_1.User])],
-        providers: [user_repository_1.DatabaseUserRepository],
-        exports: [user_repository_1.DatabaseUserRepository],
+        imports: [typeorm_module_1.TypeOrmConfigModule, mongodb_module_1.DatabaseModule, typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, category_entity_1.Category, product_entity_1.Product])],
+        providers: [user_repository_1.DatabaseUserRepository, product_repository_1.DatabaseProductRepository, category_repository_1.DatabaseCategoryRepository],
+        exports: [user_repository_1.DatabaseUserRepository, product_repository_1.DatabaseProductRepository, category_repository_1.DatabaseCategoryRepository],
     })
 ], RepositoriesModule);
 //# sourceMappingURL=repositories.module.js.map
