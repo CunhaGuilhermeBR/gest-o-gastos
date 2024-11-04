@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Inject, NotFoundException, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Inject, NotFoundException, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiExtraModels, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UseCaseProxy } from '../../usecases-proxy/usecases-proxy';
 import { UsecasesProxyModule } from '../../usecases-proxy/usecases-proxy.module';
@@ -48,10 +48,19 @@ export class CategoryController {
 
   @Get('categories')
   @ApiResponseType(CategoryPresenter, true)
-  async getCategories() {
-    const categories = await this.getAllCategoryUsecaseProxy.getInstance().execute();
+  async getCategories(
+    @Query('name') name?: string,          
+    @Query('price') price?: number,       
+    @Query('description') description?: string, 
+    @Query('sortField') sortField?: string, 
+    @Query('sortOrder') sortOrder: 'asc' | 'desc' = 'asc'
+  ) {
+    const categories = await this.getAllCategoryUsecaseProxy.getInstance().execute(
+      { name, price, description }, sortField, sortOrder
+    );
     return categories;
   }
+
 
   @Get('all')
   @ApiResponseType(CategoryPresenter, true)
@@ -59,7 +68,7 @@ export class CategoryController {
     return await this.getAllCategoriesUsecaseProxy.getInstance().execute();
   }
 
-  @Put('category')
+  @Patch('category')
   @ApiResponseType(CategoryPresenter, true)
   async updateCategory(@Query('id') id: ObjectId, @Body() updateCategoryDto: UpdateCategoryDto) {
     await this.updateCategoryUsecaseProxy.getInstance().execute(id, updateCategoryDto);

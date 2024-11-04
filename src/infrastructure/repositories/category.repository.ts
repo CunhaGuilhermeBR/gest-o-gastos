@@ -42,17 +42,42 @@ export class DatabaseCategoryRepository implements CategoryRepository {
         await this.categoryEntityRepository.delete({ _id: new ObjectId(id) });
     }
 
-    async findProductByCategory() {
-        const categories = await this.categoryEntityRepository.find();
+    async findProductByCategory(
+        filters: { name?: string, price?: number, description?: string },
+        sortField?: string,
+        sortOrder: 'asc' | 'desc' = 'asc'
+    ) {
+        const categories = await this.categoryEntityRepository.find({
+            order: {
+                order: 'ASC'
+            },
+        });
         const groupedProducts: Record<string, Product[]> = {};
 
         for (const category of categories) {
+            const whereClause: any = {
+                category_id: new ObjectId(category._id),
+                active: true,
+            };
+
+            if (filters) {
+                if (filters.name && filters.name.trim() !== '') {
+                    whereClause.name = { $regex: filters.name, $options: 'i' };
+                }
+                if (filters.description && filters.description.trim() !== '') {
+                    whereClause.description = { $regex: filters.description, $options: 'i' };
+                }
+            
+                if (filters.price !== undefined) {
+                    whereClause.price = filters.price;
+                }
+            }
+                        
             const products = await this.productEntityRepository.find({
-                where: {
-                    category_id: new ObjectId(category._id),
-                    active: true,
-                },
+                where: whereClause,
+                order: sortField ? { [sortField]: sortOrder === 'asc' ? 1 : -1 } : undefined,
             });
+            
 
             if (products.length > 0) {
                 groupedProducts[category.name] = products;
@@ -61,6 +86,7 @@ export class DatabaseCategoryRepository implements CategoryRepository {
 
         return groupedProducts;
     }
+
 
     private category(categoryEntity: Category): CategoryM {
         const category: CategoryM = new CategoryM();

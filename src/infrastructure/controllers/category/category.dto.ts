@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsObject, IsString, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsObject, IsString, IsOptional, IsNumber,  } from 'class-validator';
 import { ObjectId } from 'typeorm';
 
 export class UpdateCategoryDto {
@@ -12,6 +12,11 @@ export class UpdateCategoryDto {
   @IsOptional()
   @IsString()
   readonly name?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsNumber()
+  readonly order?: number;
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -29,4 +34,9 @@ export class AddCategoryDto {
   @IsOptional()
   @IsString()
   readonly description?: string;
+
+  @ApiProperty({ required: false })
+  @IsNotEmpty()
+  @IsNumber()
+  readonly order: number;
 }

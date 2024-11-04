@@ -11,6 +11,9 @@ export class Category {
   @Column('string', { nullable: true })
   description?: string;
 
+  @Column('number')
+  order: number;
+
   @CreateDateColumn({ name: 'create_date' })
   create_date: Date;
 

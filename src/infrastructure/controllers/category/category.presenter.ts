@@ -9,6 +9,9 @@ export class CategoryPresenter {
   @ApiProperty()
   name: string;
 
+  @ApiProperty()
+  order: number;
+
   @ApiProperty({ required: false })
   description?: string;
 
@@ -24,5 +27,6 @@ export class CategoryPresenter {
     this.description = category.description;
     this.create_date = category.create_date;
     this.updated_date = category.updated_date;
+    this.order = category.order
   }
 }

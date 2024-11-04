@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Inject, NotFoundException, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Inject, NotFoundException, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiExtraModels, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UseCaseProxy } from '../../usecases-proxy/usecases-proxy';
 import { UsecasesProxyModule } from '../../usecases-proxy/usecases-proxy.module';
@@ -53,7 +53,7 @@ export class UserController {
     return users.map((user) => new UserPresenter(user));
   }
 
-  @Put('user')
+  @Patch('user')
   @ApiResponseType(UserPresenter, true)
   async updateUser(@Query('id') id: ObjectId, @Body() updateUserDto: UserMWithoutPassword) {
     await this.updateUserUsecaseProxy.getInstance().execute(id, updateUserDto);

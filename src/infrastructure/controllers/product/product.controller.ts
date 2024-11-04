@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Inject, NotFoundException, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Inject, NotFoundException, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiExtraModels, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UseCaseProxy } from '../../usecases-proxy/usecases-proxy';
 import { UsecasesProxyModule } from '../../usecases-proxy/usecases-proxy.module';
@@ -50,7 +50,7 @@ export class ProductController {
     return products.map((product) => new ProductPresenter(product));
   }
 
-  @Put('product')
+  @Patch('product')
   @ApiResponseType(ProductPresenter, true)
   async updateProduct(@Query('id') id: ObjectId, @Body() updateProductDto: UpdateProductDto) {
     await this.updateProductUsecaseProxy.getInstance().execute(id, updateProductDto);
