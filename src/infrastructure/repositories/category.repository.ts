@@ -29,10 +29,18 @@ export class DatabaseCategoryRepository implements CategoryRepository {
         await this.categoryEntityRepository.insert(this.toCategoryEntity(category));
     }
 
-    async findAll(): Promise<CategoryM[]> {
-        const categoriesEntity = await this.categoryEntityRepository.find();
+    async findAll(page: number = 1, limit: number = 10): Promise<CategoryM[]> {
+        const skip = (+page - 1) * +limit;
+
+        const categoriesEntity = await this.categoryEntityRepository.find({
+            skip: skip,
+            take: +limit,
+            order: { name: 'ASC' }
+        });
+
         return categoriesEntity.map((categoryEntity) => this.category(categoryEntity));
     }
+
 
     async findById(id: ObjectId): Promise<CategoryM> {
         return await this.categoryEntityRepository.findOne({ where: { _id: new ObjectId(id) } });
@@ -67,17 +75,17 @@ export class DatabaseCategoryRepository implements CategoryRepository {
                 if (filters.description && filters.description.trim() !== '') {
                     whereClause.description = { $regex: filters.description, $options: 'i' };
                 }
-            
+
                 if (filters.price !== undefined) {
                     whereClause.price = filters.price;
                 }
             }
-                        
+
             const products = await this.productEntityRepository.find({
                 where: whereClause,
                 order: sortField ? { [sortField]: sortOrder === 'asc' ? 1 : -1 } : undefined,
             });
-            
+
 
             if (products.length > 0) {
                 groupedProducts[category.name] = products;
@@ -93,6 +101,7 @@ export class DatabaseCategoryRepository implements CategoryRepository {
 
         category._id = categoryEntity._id;
         category.name = categoryEntity.name;
+        category.order = categoryEntity.order;
         category.description = categoryEntity.description;
         category.create_date = categoryEntity.create_date;
         category.updated_date = categoryEntity.updated_date;
@@ -105,6 +114,7 @@ export class DatabaseCategoryRepository implements CategoryRepository {
 
         categoryEntity._id = new ObjectId();
         categoryEntity.name = category.name;
+        categoryEntity.order = category.order;
         categoryEntity.description = category.description;
         categoryEntity.create_date = new Date();
         categoryEntity.updated_date = new Date();

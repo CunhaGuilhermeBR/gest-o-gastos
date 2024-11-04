@@ -13,6 +13,7 @@ export class ProductM {
     options?: string[];
     active: boolean;
     category_id: ObjectId;
+    category_label: string;
     create_date: Date;
     updated_date: Date;
 }

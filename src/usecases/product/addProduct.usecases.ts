@@ -2,11 +2,13 @@ import { ObjectId } from 'mongodb';
 import { ILogger } from '../../domain/logger/logger.interface';
 import { ProductM } from '../../domain/model/product';
 import { ProductRepository } from '../../domain/repositories/product.interface.repository';
+import { CategoryRepository } from 'src/domain/repositories/category.interface.repository';
 
 export class AddProductUseCases {
   constructor(
     private readonly logger: ILogger,
-    private readonly productRepository: ProductRepository  ) {}
+    private readonly productRepository: ProductRepository,
+    private readonly categoryRepository: CategoryRepository ) {}
 
   async execute(
     name: string,
@@ -23,6 +25,8 @@ export class AddProductUseCases {
     product.options = options;
     product.active = active !== undefined ? active : true;
     product.category_id = category_id;
+    const category = await this.categoryRepository.findById(product.category_id)
+    product.category_label = category.name
 
     await this.productRepository.insert(product);
     this.logger.log('AddProductUseCases execute', 'New product has been inserted');

@@ -110,16 +110,16 @@ export class UsecasesProxyModule {
             new UseCaseProxy(new GetProductUseCases(productRepository)),
         },
         {
-          inject: [LoggerService, DatabaseProductRepository],
+          inject: [LoggerService, DatabaseProductRepository, DatabaseCategoryRepository],
           provide: UsecasesProxyModule.POST_PRODUCT_USECASES_PROXY,
-          useFactory: (logger: LoggerService, productRepository: DatabaseProductRepository) =>
-            new UseCaseProxy(new AddProductUseCases(logger, productRepository)),
+          useFactory: (logger: LoggerService, productRepository: DatabaseProductRepository, categoryRepository: DatabaseCategoryRepository) =>
+            new UseCaseProxy(new AddProductUseCases(logger, productRepository, categoryRepository)),
         },
         {
-          inject: [LoggerService, DatabaseProductRepository],
+          inject: [LoggerService, DatabaseProductRepository, DatabaseCategoryRepository],
           provide: UsecasesProxyModule.PUT_PRODUCT_USECASES_PROXY,
-          useFactory: (logger: LoggerService, productRepository: DatabaseProductRepository) =>
-            new UseCaseProxy(new UpdateProductUseCases(logger, productRepository)),
+          useFactory: (logger: LoggerService, productRepository: DatabaseProductRepository, categoryRepository: DatabaseCategoryRepository) =>
+            new UseCaseProxy(new UpdateProductUseCases(logger, productRepository, categoryRepository)),
         },
         {
           inject: [LoggerService, DatabaseProductRepository],

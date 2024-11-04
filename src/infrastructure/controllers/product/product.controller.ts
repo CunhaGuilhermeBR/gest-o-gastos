@@ -45,8 +45,8 @@ export class ProductController {
 
   @Get('products')
   @ApiResponseType(ProductPresenter, true)
-  async getProducts() {
-    const products = await this.getAllProductUsecaseProxy.getInstance().execute();
+  async getProducts(@Query('page') page: number, @Query('limit') limit: number) {
+    const products = await this.getAllProductUsecaseProxy.getInstance().execute(page, limit);
     return products.map((product) => new ProductPresenter(product));
   }
 

@@ -16,6 +16,9 @@ export class DatabaseProductRepository implements ProductRepository {
     async updateContent(id: ObjectId, data: Partial<ProductM>): Promise<void> {
         data.updated_date = new Date();
         delete data.create_date;
+        if (data.category_id) {
+            data.category_id = new ObjectId(data.category_id)
+        }
         await this.productEntityRepository.update(
             { _id: new ObjectId(id) },
             data,
@@ -26,12 +29,17 @@ export class DatabaseProductRepository implements ProductRepository {
         await this.productEntityRepository.insert(this.toProductEntity(product));
     }
 
-    async findAll(): Promise<ProductM[]> {
-        const productsEntity = await this.productEntityRepository.find();
+    async findAll(page: number = 1, limit: number = 10): Promise<ProductM[]> {
+        const skip = (+page - 1) * +limit;
+
+        const productsEntity = await this.productEntityRepository.find({
+            skip: skip,
+            take: +limit,
+        });
         return productsEntity.map((productEntity) => this.product(productEntity));
     }
 
-    async findById(id: ObjectId): Promise<ProductM> {
+    async findById(id: ObjectId) {
         return await this.productEntityRepository.findOne({ where: { _id: new ObjectId(id) } });
     }
 
@@ -51,6 +59,7 @@ export class DatabaseProductRepository implements ProductRepository {
         product.category_id = productEntity.category_id;
         product.create_date = productEntity.create_date;
         product.updated_date = productEntity.updated_date;
+        product.category_label = productEntity.category_label;
 
         return product;
     }
@@ -67,6 +76,7 @@ export class DatabaseProductRepository implements ProductRepository {
         productEntity.category_id = product.category_id;
         productEntity.create_date = new Date();
         productEntity.updated_date = new Date();
+        productEntity.category_label = product.category_label;
 
         return productEntity;
     }

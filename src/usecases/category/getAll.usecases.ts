@@ -5,7 +5,7 @@ import { CategoryRepository } from '../../domain/repositories/category.interface
 export class GetAllCategoriesUseCases {
   constructor(private readonly categoryRepository: CategoryRepository) {}
 
-  async execute(): Promise<CategoryM[]> {
-    return await this.categoryRepository.findAll();
+  async execute(page?: number, limit?: number): Promise<CategoryM[]> {
+    return await this.categoryRepository.findAll(page, limit);
   }
 }
