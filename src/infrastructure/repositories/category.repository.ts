@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Category } from '../entities/category.entity';
@@ -26,7 +26,21 @@ export class DatabaseCategoryRepository implements CategoryRepository {
     }
 
     async insert(category: CategoryM): Promise<void> {
+        const exists = await this.categoryEntityRepository.findOne({
+            where: {
+                name: category.name
+            }
+        })
+        console.log(exists)
+        if (exists) {
+            throw new BadRequestException('Categoria já existe')
+        }
+        const categoryWithMaxOrder = await this.categoryEntityRepository.findOne({
+            order: { order: 'DESC' },
+        });
+        category.order = categoryWithMaxOrder.order + 1
         await this.categoryEntityRepository.insert(this.toCategoryEntity(category));
+
     }
 
     async findAll(page: number = 1, limit: number = 10): Promise<CategoryM[]> {
