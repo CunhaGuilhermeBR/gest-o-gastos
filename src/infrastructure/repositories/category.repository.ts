@@ -60,6 +60,14 @@ export class DatabaseCategoryRepository implements CategoryRepository {
     }
 
     async deleteById(id: ObjectId): Promise<void> {
+        const products = await this.productEntityRepository.find({
+            where: {
+                category_id: new ObjectId(id),
+            },
+        });
+        for(const product of products){
+            await this.productEntityRepository.delete({_id: new ObjectId(product._id)})
+        }
         await this.categoryEntityRepository.delete({ _id: new ObjectId(id) });
     }
 

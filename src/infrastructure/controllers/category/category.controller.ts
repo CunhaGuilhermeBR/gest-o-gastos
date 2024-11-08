@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Inject, NotFoundException, Patch, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Inject, NotFoundException, Patch, Post, Put, Query, UnauthorizedException } from '@nestjs/common';
 import { ApiExtraModels, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UseCaseProxy } from '../../usecases-proxy/usecases-proxy';
 import { UsecasesProxyModule } from '../../usecases-proxy/usecases-proxy.module';
@@ -10,10 +10,11 @@ import { GetCategoriesUseCases } from '../../../usecases/category/getCategories.
 import { UpdateCategoryUseCases } from '../../../usecases/category/updateCategory.usecases';
 import { DeleteCategoryUseCases } from '../../../usecases/category/delete.usecases';
 import { AddCategoryUseCases } from '../../../usecases/category/addCategory.usecases';
-import { CategoryM } from '../../../domain/model/category';
+import * as jwt from 'jsonwebtoken';
 import { ObjectId } from 'typeorm';
 import { ExceptionsService } from '../../exceptions/exceptions.service';
 import { GetAllCategoriesUseCases } from 'src/usecases/category/getAll.usecases';
+import { UserMWithoutPassword } from '../../../domain/model/user';
 
 @Controller('category')
 @ApiTags('category')
@@ -77,8 +78,12 @@ export class CategoryController {
 
   @Delete('category')
   @ApiResponseType(CategoryPresenter, true)
-  async deleteCategory(@Query('id') id: ObjectId) {
-    await this.deleteCategoryUsecaseProxy.getInstance().execute(id);
+  async deleteCategory(@Query('id') id: ObjectId, @Query('token') token: any) {
+    if(!token){
+      throw new UnauthorizedException('Token de auth é necessário')
+    }
+    const decoded = jwt.verify(token, process.env.SECRET_KEY) as UserMWithoutPassword
+    await this.deleteCategoryUsecaseProxy.getInstance().execute(id, decoded);
     return;
   }
 

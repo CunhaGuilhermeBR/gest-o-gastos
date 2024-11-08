@@ -160,10 +160,10 @@ export class UsecasesProxyModule {
             new UseCaseProxy(new UpdateCategoryUseCases(logger, categoryRepository)),
         },
         {
-          inject: [LoggerService, DatabaseCategoryRepository],
+          inject: [LoggerService, DatabaseCategoryRepository, DatabaseUserRepository],
           provide: UsecasesProxyModule.DELETE_CATEGORY_USECASES_PROXY,
-          useFactory: (logger: LoggerService, categoryRepository: DatabaseCategoryRepository) =>
-            new UseCaseProxy(new DeleteCategoryUseCases(logger, categoryRepository)),
+          useFactory: (logger: LoggerService, categoryRepository: DatabaseCategoryRepository, userRepository: DatabaseUserRepository) =>
+            new UseCaseProxy(new DeleteCategoryUseCases(logger, categoryRepository, userRepository)),
         },
       ],
       exports: [

@@ -14,6 +14,8 @@ import { UserMWithoutPassword } from '../../../domain/model/user';
 import { ObjectId } from 'typeorm';
 import { LoginUseCases } from '../../../usecases/user/login.usecases';
 import { ExceptionsService } from '../../exceptions/exceptions.service'
+import * as jwt from 'jsonwebtoken';
+
 
 @Controller('user')
 @ApiTags('user')
@@ -84,6 +86,7 @@ export class UserController {
     if (!user) {
       this.exceptionsService.UnauthorizedException();
     }
-    return new UserPresenter(user)
+    const token = jwt.sign(user, process.env.SECRET_KEY);
+    return {user: user, token}
   }
 }
