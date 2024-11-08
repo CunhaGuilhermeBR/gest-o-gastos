@@ -31,7 +31,6 @@ export class DatabaseCategoryRepository implements CategoryRepository {
                 name: category.name
             }
         })
-        console.log(exists)
         if (exists) {
             throw new BadRequestException('Categoria já existe')
         }
