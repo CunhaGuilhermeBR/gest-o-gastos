@@ -9,6 +9,9 @@ export class ProductPresenter {
   @ApiProperty()
   name: string;
 
+  @ApiProperty()
+  category_label: string;
+
   @ApiProperty({ required: false })
   description?: string;
 
@@ -40,5 +43,6 @@ export class ProductPresenter {
     this.category_id = product.category_id;
     this.create_date = product.create_date;
     this.updated_date = product.updated_date;
+    this.category_label = product.category_label;
   }
 }
