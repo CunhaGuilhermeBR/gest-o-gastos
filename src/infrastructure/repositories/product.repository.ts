@@ -39,6 +39,11 @@ export class DatabaseProductRepository implements ProductRepository {
         return productsEntity.map((productEntity) => this.product(productEntity));
     }
 
+    async findTotalPages(limit: number = 10): Promise<number> {
+        const totalItems = await this.productEntityRepository.count();
+        return Math.ceil(totalItems / limit);
+    }
+
     async findById(id: ObjectId) {
         return await this.productEntityRepository.findOne({ where: { _id: new ObjectId(id) } });
     }

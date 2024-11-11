@@ -7,4 +7,5 @@ export interface ProductRepository {
   findById(id: ObjectId);
   updateContent(id: ObjectId, data: Partial<ProductM>): Promise<void>;
   deleteById(id: ObjectId): Promise<void>;
+  findTotalPages(limit: number): Promise<number>;
 }

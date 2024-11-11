@@ -4,6 +4,8 @@ export class GetProductsUseCases {
   constructor(private readonly productRepository: ProductRepository) {}
 
   async execute(page?:number, limit?: number){
-    return await this.productRepository.findAll(page, limit);
+    const products =  await this.productRepository.findAll(page, limit);
+    const totalPage = await this.productRepository.findTotalPages(limit)
+    return {totalPage, products}
   }
 }

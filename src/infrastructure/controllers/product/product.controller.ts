@@ -46,8 +46,9 @@ export class ProductController {
   @Get('products')
   @ApiResponseType(ProductPresenter, true)
   async getProducts(@Query('page') page: number, @Query('limit') limit: number) {
-    const products = await this.getAllProductUsecaseProxy.getInstance().execute(page, limit);
-    return products.map((product) => new ProductPresenter(product));
+    const data = await this.getAllProductUsecaseProxy.getInstance().execute(page, limit);
+    const formattedProducts = data.products.map((product) => new ProductPresenter(product));
+    return {products: formattedProducts, totalPages: data.totalPage, actualPage: Number(page) ?? 1}
   }
 
   @Patch('product')
