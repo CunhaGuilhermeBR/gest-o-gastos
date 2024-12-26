@@ -24,8 +24,8 @@ export class AddProductUseCases {
     product.price = price;
     product.options = options;
     product.active = active !== undefined ? active : true;
-    product.category_id = category_id;
-    const category = await this.categoryRepository.findById(product.category_id)
+    product.category_id = typeof category_id === "string" ? new ObjectId(category_id) : category_id;
+    const category = await this.categoryRepository.findById(category_id)
     product.category_label = category.name
 
     await this.productRepository.insert(product);
