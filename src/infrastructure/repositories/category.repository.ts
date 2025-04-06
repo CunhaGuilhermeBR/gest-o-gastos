@@ -42,13 +42,9 @@ export class DatabaseCategoryRepository implements CategoryRepository {
 
     }
 
-    async findAll(page: number = 1, limit: number = 10): Promise<CategoryM[]> {
-        const skip = (+page - 1) * +limit;
-
+    async findAll(): Promise<CategoryM[]> {
         const categoriesEntity = await this.categoryEntityRepository.find({
-            skip: skip,
-            take: +limit,
-            order: { name: 'ASC' }
+            order: { order: 'ASC', name: 'ASC' }
         });
 
         return categoriesEntity.map((categoryEntity) => this.category(categoryEntity));

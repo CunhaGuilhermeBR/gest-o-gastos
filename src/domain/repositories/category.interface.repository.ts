@@ -4,7 +4,7 @@ import { ProductM } from '../model/product';
 
 export interface CategoryRepository {
   insert(data: CategoryM): Promise<void>;
-  findAll(page: number, limit: number): Promise<CategoryM[]>;
+  findAll(): Promise<CategoryM[]>;
   findById(id: ObjectId): Promise<CategoryM>;
   updateContent(id: ObjectId, data: Partial<CategoryM>): Promise<void>;
   deleteById(id: ObjectId): Promise<void>;
